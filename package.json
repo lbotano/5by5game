@@ -1,0 +1,27 @@
+{
+  "name": "5by5game",
+  "version": "1.0.0",
+  "description": "A game inspired by Terraria created by me for the Finally Finish Something 2020 game jam.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "browser-sync start --server --files '*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:lbotano/5by5game.git"
+  },
+  "author": "Lautaro Bernabé Otaño",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "gulp": "^4.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "pixi.js": "^5.2.0",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.4"
+  }
+}
