@@ -1,27 +1,37 @@
 {
   "name": "5by5game",
   "version": "1.0.0",
-  "description": "A game inspired by Terraria created by me for the Finally Finish Something 2020 game jam.",
-  "main": "index.js",
+  "description": "A game inspired by Terraria created by me for the Finally Finish Something 2020 Game Jam",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "browser-sync start --server --files '*.js'"
+    "start": "webpack-dev-server",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:lbotano/5by5game.git"
+    "url": "git+https://github.com/lbotano/5by5game.git"
   },
-  "author": "Lautaro Bernabé Otaño",
-  "license": "GPL-3.0",
+  "author": "Lautaro Bernabé Otaño <otanolautarob@gmail.com>",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/lbotano/5by5game/issues"
+  },
+  "homepage": "https://github.com/lbotano/5by5game#readme",
   "devDependencies": {
-    "browser-sync": "^2.26.7",
+    "@typescript-eslint/eslint-plugin": "^2.14.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.1.1",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.9.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "gulp": "^4.0.0",
-    "gulp-typescript": "^6.0.0-alpha.1",
+    "file-loader": "^5.0.2",
+    "html-webpack-plugin": "^3.2.0",
     "pixi.js": "^5.2.0",
-    "prettier": "^1.19.1",
-    "typescript": "^3.7.4"
+    "ts-loader": "^6.2.1",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
   }
 }

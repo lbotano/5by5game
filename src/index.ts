@@ -1,3 +1,5 @@
+import * as PIXI from 'pixi.js';
+
 const app = new PIXI.Application();
 
 document.body.appendChild(app.view);
@@ -11,8 +13,8 @@ app.renderer.backgroundColor = 0x5fa0dd;
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
-PIXI.Loader.shared.add('textures/textures.json').load(() => {
-    const sheet = PIXI.Loader.shared.resources['textures/textures.json'];
+PIXI.Loader.shared.add('assets/img/textures.json').load(() => {
+    const sheet = PIXI.Loader.shared.resources['assets/img/textures.json'];
     const playerSheet = new PIXI.Sprite(sheet.textures['player/player_00.png']);
 
     app.stage.addChild(playerSheet);

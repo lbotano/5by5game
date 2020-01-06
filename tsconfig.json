@@ -1,9 +1,14 @@
 {
-    "files": [
-        "src/index.js"
-    ],
+    "compileOnSave": false,
     "compilerOptions": {
-        "noImplicitAny": true,
-        "target": "es5"
+        "outDir": "./dist",
+        "moduleResolution": "node",
+        "target": "es5",
+        "baseUrl": "./src/",
+        "paths": {
+            "@app/*": ["app/*"],
+            "@models/*": ["models/*"],
+            "@assets/*": ["assets/*"]
+        }
     }
 }
