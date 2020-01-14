@@ -10,5 +10,9 @@
             "@models/*": ["models/*"],
             "@assets/*": ["assets/*"]
         }
-    }
+    },
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "strict": true,
+    "noUnusedLocals": true
 }

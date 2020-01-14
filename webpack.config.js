@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 module.exports = {
     entry: path.resolve(__dirname, 'src/index.ts'),
@@ -12,13 +13,15 @@ module.exports = {
     devServer: {
         contentBase: './dist',
         hot: true,
-        port: 8000
+        port: 8000,
+        writeToDisk: true
     },
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'Development'
         }),
+        new HtmlWebpackTagsPlugin({ tags: ['assets/css/game.css'], append: true}),
         new CopyWebpackPlugin([{ from: './src/assets', to: 'assets' }]),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin()
@@ -32,6 +35,10 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: 'file-loader'
+            },
+            {
+                test: /\.css$/,
+                use: 'typings-for-css-modules'
             }
         ]
     },

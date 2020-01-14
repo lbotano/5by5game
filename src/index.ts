@@ -1,30 +1,40 @@
 import * as PIXI from 'pixi.js';
+import Player from './Player';
 
 const app = new PIXI.Application();
 
 document.body.appendChild(app.view);
 
-resizeWindow();
-window.addEventListener('resize', () => {
-    resizeWindow();
-});
 
-app.renderer.backgroundColor = 0x5fa0dd;
+class Game {
+    public player: Player;
+    constructor() {
+        app.renderer.backgroundColor = 0x5fa0dd;
 
-PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+        // Prevent the pixelart from being blurry
+        PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
-PIXI.Loader.shared.add('assets/img/textures.json').load(() => {
-    const sheet = PIXI.Loader.shared.resources['assets/img/textures.json'];
-    const playerSheet = new PIXI.Sprite(sheet.textures['player/player_00.png']);
+        // Makes the canvas the same size as the viewport
+        this.windowResized();
 
-    app.stage.addChild(playerSheet);
+        this.player = new Player(app);
+        PIXI.Loader.shared.add('assets/img/textures.json').load(() => {
+            this.player.setSheet(PIXI.Loader.shared.resources['assets/img/textures.json']);
+            app.ticker.add((delta) => {
+                this.player.update();
+            });
+        });
 
-    playerSheet.width *= 10;
-    playerSheet.height *= 10;
-    playerSheet.x = app.screen.width / 2;
-    playerSheet.y = app.screen.height / 2;
-});
+        window.addEventListener('resize', this.windowResized);
+    }
 
-function resizeWindow(): void {
-    app.renderer.resize(window.innerWidth, window.innerHeight);
+    private windowResized(): void {
+        app.renderer.resize(window.innerWidth, window.innerHeight);
+    }
+
+    private update(delta: number): void {
+        this.player.update();
+    }
 }
+
+let game = new Game();
