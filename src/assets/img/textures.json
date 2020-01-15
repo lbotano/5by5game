@@ -124,5 +124,14 @@
 	"size": {"w":31,"h":61},
 	"scale": "1",
 	"smartupdate": "$TexturePacker:SmartUpdate:3e277768219637a71fdcab45ec44b05f:6e880355de940d6c1d10ac9011e034e5:cf827d152df04949dfee256cd0c8efd8$"
-}
+},
+"animations": [
+    {
+        "name": "walk",
+        "prefix": "player/player_",
+        "start_frame": 1,
+        "end_frame": 3,
+        "loop": true
+    }
+]
 }
