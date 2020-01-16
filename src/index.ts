@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
+import Player from './app/Player.class';
 import { debug } from 'webpack';
-1
+
 class Keyboard {
     keys: { [id: string]: boolean} = {};
 
@@ -19,50 +20,84 @@ class Keyboard {
     }
 }
 
-const app: PIXI.Application = new PIXI.Application({
+const app = new PIXI.Application({
     width: 1280,
     height: 720,
     backgroundColor: 0x42a7f5
 });
 
-PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-
-PIXI.Loader.shared.add('assets/img/textures.json').load(setup);
-
-const keyboard: Keyboard = new Keyboard();
-
-let player: PIXI.Sprite;
-let playerTextures: PIXI.Texture[];
-
-function setup(): void {
-    document.body.appendChild(app.view);
-
-    // Textures
-    const sheet: PIXI.Spritesheet = PIXI.Loader.shared.resources['assets/img/textures.json'].spritesheet;
-
-    playerTextures = [
-        sheet.textures['player/player_00.png'],
-        sheet.textures['player/player_01.png'],
-        sheet.textures['player/player_02.png']
-    ];
+class Game {
+    /*readonly app: PIXI.Application = new PIXI.Application({
+        width: 1280,
+        height: 720,
+        backgroundColor: 0x42a7f5
+    });*/
     
-    player = new PIXI.Sprite(playerTextures[0]);
-    app.stage.addChild(player);
-    player.position.x = app.renderer.width / 2;
-    player.position.y = app.renderer.height / 2;
-    player.scale = new PIXI.Point(8, 8);
-
-    console.log(app.renderer.width / 2);
-    console.log(app.renderer.height / 2);
+    private player: Player;
     
-    // Assign update function
-    app.ticker.add(update);
-}
+    constructor() {
+        PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
-function update(delta: number): void {
-    if (keyboard.isPressed('Space')) {
-        player.texture = playerTextures[0];
-    } else {
-        player.texture = playerTextures[2];
+        document.body.appendChild(app.view);
+
+        this.player = new Player(app);
+
+        app.ticker.add((delta) => {this.update(delta)});
     }
+
+    update(delta: number): void {
+        this.player.update(delta);
+    }
+
+    /*app: PIXI.Application;
+
+    const keyboard: Keyboard = new Keyboard();
+
+    player: PIXI.Sprite;
+    playerTextures: PIXI.Texture[];
+
+    constructor() {
+        this.app = new PIXI.Application({
+            width: 1280,
+            height: 720,
+            backgroundColor: 0x42a7f5
+        });
+        PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+        PIXI.Loader.shared.add('assets/img/textures.json').load(this.setup);
+    }
+
+    setup(): void {
+        document.body.appendChild(this.app.view);
+
+        // Textures
+        const sheet: PIXI.Spritesheet = PIXI.Loader.shared.resources['assets/img/textures.json'].spritesheet;
+
+        playerTextures = [
+            sheet.textures['player/player_00.png'],
+            sheet.textures['player/player_01.png'],
+            sheet.textures['player/player_02.png']
+        ];
+        
+        player = new PIXI.Sprite(playerTextures[0]);
+        app.stage.addChild(player);
+        player.position.x = app.renderer.width / 2;
+        player.position.y = app.renderer.height / 2;
+        player.scale = new PIXI.Point(8, 8);
+
+        console.log(app.renderer.width / 2);
+        console.log(app.renderer.height / 2);
+        
+        // Assign update function
+        app.ticker.add(update);
+    }
+
+    function update(delta: number): void {
+        if (keyboard.isPressed('Space')) {
+            player.texture = playerTextures[0];
+        } else {
+            player.texture = playerTextures[2];
+        }
+    }*/
 }
+
+new Game();
