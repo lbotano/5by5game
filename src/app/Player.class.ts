@@ -14,7 +14,9 @@ export default class Player {
 
     private velocity: number     = 0.0;
     private acceleration: number = 0.0;
-    private readonly gravity: number = 1;;
+
+    private readonly gravity: number = 1;
+    private readonly rotationRange: number = 50; // Smaller means more rotation range
 
     constructor(app: PIXI.Application) {
         this.app = app;
@@ -33,13 +35,18 @@ export default class Player {
         ];
         this.sprite = new PIXI.Sprite(this.textures[0]);
 
-        // Escalar jugador
+        // Put pivot at the center
+        this.sprite.pivot.set(this.sprite.width / 2, this.sprite.height / 2);
+
+        // Scale player
         this.sprite.scale = new PIXI.Point(6, 6);
 
-        // Añadir jugador
+        
+
+        // Add player
         this.app.stage.addChild(this.sprite);
 
-        // Posicionar jugador
+        // Positionate player
         this.sprite.position.x = this.app.screen.width / 2 - this.sprite.width / 2;
         this.sprite.position.y = this.app.screen.height / 2 - this.sprite.height / 2;
 
@@ -53,8 +60,18 @@ export default class Player {
         }
 
         // Apply physics
-        this.velocity           += this.acceleration /** delta*/;
-        this.sprite.position.y  += this.velocity /** delta*/;
+        this.velocity           += this.acceleration * delta;
+        this.sprite.position.y  += this.velocity * delta;
+
+        // Rotate player according to velocity
+        let rotation: number = .5 * Math.PI + this.velocity / this.rotationRange;
+        if (rotation > Math.PI) {
+            rotation = Math.PI;
+        } else if (rotation < 0) {
+            rotation = 0;
+        }
+        this.sprite.rotation = rotation;
+
 
         // Change appearance depending on the velocity
         if (this.velocity > 0) {
@@ -68,7 +85,7 @@ export default class Player {
             this.acceleration = 0;
             this.velocity = -this.gravity * 20;
         } else {
-            this.acceleration += this.gravity /** delta*/;
+            this.acceleration += this.gravity * delta;
         }
 
         if (this.acceleration > this.gravity) {

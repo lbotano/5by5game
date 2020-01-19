@@ -21,8 +21,6 @@ export default class Keyboard {
         const isPressed: boolean = this.keys[eventCode];
 
         this.keys[eventCode] = false;
-
-        console.log(isPressed, this.keys[eventCode]);
         
         return isPressed;
     }
