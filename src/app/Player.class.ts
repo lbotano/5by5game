@@ -10,8 +10,6 @@ export default class Player {
     private textures: PIXI.Texture[];
     public sprite: PIXI.Sprite;
 
-    private ready: boolean = false;
-
     private velocity: number     = 0.0;
     private acceleration: number = 0.0;
 
@@ -21,12 +19,7 @@ export default class Player {
     constructor(app: PIXI.Application) {
         this.app = app;
 
-        PIXI.Loader.shared.add('./assets/img/textures.json').load(() => {this.spritesLoaded()});
-    }
-
-    private spritesLoaded(): void {
         // Initialize variables
-        console.log("sprites loaded :)");
         this.sheet = PIXI.Loader.shared.resources['./assets/img/textures.json'].spritesheet;
         this.textures = [
             this.sheet.textures['player/player_00.png'],
@@ -41,24 +34,15 @@ export default class Player {
         // Scale player
         this.sprite.scale = new PIXI.Point(6, 6);
 
-        
-
         // Add player
         this.app.stage.addChild(this.sprite);
 
         // Positionate player
-        this.sprite.position.x = this.app.screen.width / 2 - this.sprite.width / 2;
-        this.sprite.position.y = this.app.screen.height / 2 - this.sprite.height / 2;
-
-        this.ready = true;
+        this.sprite.position.x = this.app.screen.width / 3 - this.sprite.width / 3;
+        this.sprite.position.y = this.app.screen.height / 3 - this.sprite.height / 3;
     }
 
     public update(delta: number): void {
-        // If textures aren't loaded don't run this function
-        if (!this.ready) {
-            return;
-        }
-
         // Apply physics
         this.velocity           += this.acceleration * delta;
         this.sprite.position.y  += this.velocity * delta;
