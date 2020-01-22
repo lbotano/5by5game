@@ -77,4 +77,8 @@ export default class Player {
         }
 
     }
+
+    public getBounds(): PIXI.Bounds {
+        return new PIXI.Bounds()
+    }
 }

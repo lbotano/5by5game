@@ -26,7 +26,7 @@ export default class Pipe {
     public calculateObstacle(): void {
         this.holeY = Math.ceil(Math.random() * this.app.renderer.height / (5 * 6));
         for (let i = 0; i < this.blockCount; i++) {
-            let sprite = new PIXI.Sprite(this.texture);
+            const sprite = new PIXI.Sprite(this.texture);
             sprite.scale = new PIXI.Point(6, 6);
             this.sprites.push(sprite);
             this.app.stage.addChild(sprite);

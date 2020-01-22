@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Player from './app/Player.class';
 import Pipes from './app/Pipes.class';
-import { debug } from 'webpack';
+import areColliding from '@app/Collision.module';
 
 const app = new PIXI.Application({
     width: 1280,
@@ -14,6 +14,7 @@ class Game {
     private pipes: Pipes;
     
     constructor() {
+
         PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
         document.body.appendChild(app.view);
@@ -22,6 +23,8 @@ class Game {
             this.player = new Player(app);
             this.pipes = new Pipes(app);
 
+            console.log(areColliding(new PIXI.Rectangle(0, 0, 3, 3), new PIXI.Rectangle(2, 2, 1 ,1)));
+
             app.ticker.add((delta) => {this.update(delta)});
         });
     }
@@ -29,6 +32,7 @@ class Game {
     update(delta: number): void {
         this.player.update(delta);
         this.pipes.update(delta);
+
     }
 }
 

@@ -37,7 +37,7 @@ export default class Pipes {
         if (this.levelPosition > this.sectionWidth) {
             this.levelPosition -= this.sectionWidth;
             this.sectionList.shift()//.destroy();
-            let newPipe = new Pipe(this.app);
+            const newPipe = new Pipe(this.app);
             newPipe.calculateObstacle();
             this.sectionList.push(newPipe);
         }
