@@ -7,8 +7,8 @@ export default class Pipes {
     private sheet: PIXI.Spritesheet;
     private texture: PIXI.Texture;
 
+    public sectionList: Array<Pipe> = new Array<Pipe>();
     private sectionWidth: number;
-    private sectionList: Array<Pipe> = new Array<Pipe>();
     private levelPosition: number = 0.0;
 
     private readonly SCALE_FACTOR = 6 * 5; // 5 = texture width; 6 = texture scale
@@ -32,7 +32,7 @@ export default class Pipes {
     }
 
     public update(delta: number): void {
-        this.levelPosition += 5 * delta;
+        this.levelPosition += 7 * delta;
 
         if (this.levelPosition > this.sectionWidth) {
             this.levelPosition -= this.sectionWidth;

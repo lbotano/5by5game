@@ -48,12 +48,7 @@ export default class Player {
         this.sprite.position.y  += this.velocity * delta;
 
         // Rotate player according to velocity
-        let rotation: number = .5 * Math.PI + this.velocity / this.rotationRange;
-        if (rotation > Math.PI) {
-            rotation = Math.PI;
-        } else if (rotation < 0) {
-            rotation = 0;
-        }
+        const rotation: number = .5 * Math.PI + this.velocity / this.rotationRange;
         this.sprite.rotation = rotation;
 
 
@@ -78,7 +73,22 @@ export default class Player {
 
     }
 
-    public getBounds(): PIXI.Bounds {
-        return new PIXI.Bounds()
+    private graphics: PIXI.Graphics;
+
+    public getBounds(): PIXI.Rectangle {
+        this.app.stage.removeChild(this.graphics);
+        this.graphics = new PIXI.Graphics();
+
+        this.graphics.beginFill(0xff00ff);
+        this.graphics.alpha = 0.1;
+        this.graphics.drawRect(this.sprite.position.x - this.sprite.width / 2, this.sprite.position.y - this.sprite.height / 2, this.sprite.width, this.sprite.height);
+        this.app.stage.addChild(this.graphics);
+        //this.app.stage.removeChild(graphics);
+
+        return new PIXI.Rectangle(
+            this.sprite.position.x - this.sprite.width / 2,
+            this.sprite.position.y - this.sprite.height / 2,
+            this.sprite.width,
+            this.sprite.height);
     }
 }

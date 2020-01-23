@@ -2,6 +2,8 @@ import * as PIXI from 'pixi.js';
 import Player from './app/Player.class';
 import Pipes from './app/Pipes.class';
 import areColliding from '@app/Collision.module';
+import Pipe from '@app/Pipe.class';
+import { debug } from 'webpack';
 
 const app = new PIXI.Application({
     width: 1280,
@@ -12,6 +14,8 @@ const app = new PIXI.Application({
 class Game {
     private player: Player;
     private pipes: Pipes;
+
+    private isGameStarted: boolean = true;
     
     constructor() {
 
@@ -30,9 +34,21 @@ class Game {
     }
 
     update(delta: number): void {
-        this.player.update(delta);
-        this.pipes.update(delta);
+        if (this.isGameStarted) {
+            this.player.update(delta);
+            this.pipes.update(delta);
 
+            for (const pipe of this.pipes.sectionList) {
+                const playerBounds = this.player.getBounds();
+
+                if (areColliding(playerBounds, pipe.getBottomBounds()) || areColliding(playerBounds, pipe.getTopBounds())) {
+                    console.log(this.player.sprite.x)
+
+                    this.isGameStarted = false;
+                    app.renderer.backgroundColor = 0xff0000;
+                }
+            }
+        }
     }
 }
 
