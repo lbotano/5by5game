@@ -13,8 +13,9 @@ export default class Player {
     private velocity: number     = 0.0;
     private acceleration: number = 0.0;
 
-    private readonly gravity: number = 1;
-    private readonly rotationRange: number = 50; // Smaller means more rotation range
+    private readonly GRAVITY: number = 1;
+    private readonly ROTATION_RANGE: number = 50; // Smaller means more rotation range
+    private readonly COLLIDER_MARGIN: number = 20; // Number in pixels, if the sprite is 50x50 and this constant is 10, the collider will be 40x40
 
     constructor(app: PIXI.Application) {
         this.app = app;
@@ -48,7 +49,7 @@ export default class Player {
         this.sprite.position.y  += this.velocity * delta;
 
         // Rotate player according to velocity
-        const rotation: number = .5 * Math.PI + this.velocity / this.rotationRange;
+        const rotation: number = .5 * Math.PI + this.velocity / this.ROTATION_RANGE;
         this.sprite.rotation = rotation;
 
 
@@ -60,15 +61,15 @@ export default class Player {
         }
 
         // Manage input
-        if (this.keyboard.isPressed("Space") && this.velocity >= this.gravity / 1000) {
+        if (this.keyboard.isPressed("Space") && this.velocity >= this.GRAVITY / 1000) {
             this.acceleration = 0;
-            this.velocity = -this.gravity * 20;
+            this.velocity = -this.GRAVITY * 20;
         } else {
-            this.acceleration += this.gravity * delta;
+            this.acceleration += this.GRAVITY * delta;
         }
 
-        if (this.acceleration > this.gravity) {
-            this.acceleration = this.gravity;
+        if (this.acceleration > this.GRAVITY) {
+            this.acceleration = this.GRAVITY;
         }
 
     }
@@ -81,14 +82,14 @@ export default class Player {
 
         this.graphics.beginFill(0xff00ff);
         this.graphics.alpha = 0.1;
-        this.graphics.drawRect(this.sprite.position.x - this.sprite.width / 2, this.sprite.position.y - this.sprite.height / 2, this.sprite.width, this.sprite.height);
+        this.graphics.drawRect(this.sprite.position.x - this.sprite.width / 2 + this.COLLIDER_MARGIN / 2, this.sprite.position.y - this.sprite.height / 2 + this.COLLIDER_MARGIN / 2, this.sprite.width - this.COLLIDER_MARGIN / 2, this.sprite.height - this.COLLIDER_MARGIN / 2);
         this.app.stage.addChild(this.graphics);
         //this.app.stage.removeChild(graphics);
 
         return new PIXI.Rectangle(
-            this.sprite.position.x - this.sprite.width / 2,
-            this.sprite.position.y - this.sprite.height / 2,
-            this.sprite.width,
-            this.sprite.height);
+            this.sprite.position.x - this.sprite.width / 2 + this.COLLIDER_MARGIN / 2,
+            this.sprite.position.y - this.sprite.height / 2 + this.COLLIDER_MARGIN / 2,
+            this.sprite.width - this.COLLIDER_MARGIN / 2,
+            this.sprite.height - this.COLLIDER_MARGIN / 2);
     }
 }

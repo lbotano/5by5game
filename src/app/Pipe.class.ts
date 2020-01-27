@@ -60,10 +60,12 @@ export default class Pipe {
     }
 
     public getBottomBounds(): PIXI.Rectangle {
-        const holeBottomY: number = (this.holeY + this.HOLE_SIZE) * this.BLOCK_SIZE
+        if (this.holeY === 0) return new PIXI.Rectangle();
+
+        const holeBottomY: number = (this.holeY + this.HOLE_SIZE) * this.BLOCK_SIZE;
         return new PIXI.Rectangle(
             this.posX,
-            holeBottomY * this.BLOCK_SIZE,
+            holeBottomY,
             this.BLOCK_SIZE,
             this.app.renderer.height - holeBottomY
         );
