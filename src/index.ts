@@ -4,6 +4,7 @@ import Pipes from './app/Pipes.class';
 import areColliding from '@app/Collision.module';
 import Pipe from '@app/Pipe.class';
 import { debug } from 'webpack';
+import Keyboard from '@app/Keyboard.class';
 
 const app = new PIXI.Application({
     width: 1280,
@@ -14,8 +15,10 @@ const app = new PIXI.Application({
 class Game {
     private player: Player;
     private pipes: Pipes;
+    private keyboard: Keyboard = new Keyboard();
 
-    private isGameStarted: boolean = true;
+    private isGameStarted: boolean = false;
+    private hasLost: boolean = false;
     
     constructor() {
 
@@ -35,20 +38,30 @@ class Game {
 
     update(delta: number): void {
         if (this.isGameStarted) {
-            this.player.update(delta);
-            this.pipes.update(delta);
-
-            for (const pipe of this.pipes.sectionList) {
+            if (!this.hasLost) {
+                this.player.update(delta);
+                this.pipes.update(delta);
+                
                 const playerBounds = this.player.getBounds();
+                // Check for ceiling and ground collisions
+                if (playerBounds.y <= 0 || playerBounds.y + playerBounds.height >= app.renderer.height)
+                    this.lose();
 
-                if (areColliding(playerBounds, pipe.getBottomBounds()) || areColliding(playerBounds, pipe.getTopBounds())) {
-                    console.log(this.player.sprite.x)
-
-                    this.isGameStarted = false;
-                    app.renderer.backgroundColor = 0xff0000;
+                // Check for wall collitions
+                for (const pipe of this.pipes.sectionList) {
+                    if (areColliding(playerBounds, pipe.getBottomBounds()) || areColliding(playerBounds, pipe.getTopBounds()))
+                        this.lose();
                 }
             }
+        } else {
+            if (this.keyboard.isPressed("Space"))
+                this.isGameStarted = true;
         }
+    }
+
+    private lose(): void {
+        this.hasLost = true;
+        app.renderer.backgroundColor = 0xff0000;
     }
 }
 

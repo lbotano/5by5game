@@ -84,7 +84,6 @@ export default class Player {
         this.graphics.alpha = 0.1;
         this.graphics.drawRect(this.sprite.position.x - this.sprite.width / 2 + this.COLLIDER_MARGIN / 2, this.sprite.position.y - this.sprite.height / 2 + this.COLLIDER_MARGIN / 2, this.sprite.width - this.COLLIDER_MARGIN / 2, this.sprite.height - this.COLLIDER_MARGIN / 2);
         this.app.stage.addChild(this.graphics);
-        //this.app.stage.removeChild(graphics);
 
         return new PIXI.Rectangle(
             this.sprite.position.x - this.sprite.width / 2 + this.COLLIDER_MARGIN / 2,
