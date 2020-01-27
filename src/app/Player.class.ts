@@ -77,18 +77,14 @@ export default class Player {
     private graphics: PIXI.Graphics;
 
     public getBounds(): PIXI.Rectangle {
-        this.app.stage.removeChild(this.graphics);
-        this.graphics = new PIXI.Graphics();
-
-        this.graphics.beginFill(0xff00ff);
-        this.graphics.alpha = 0.1;
-        this.graphics.drawRect(this.sprite.position.x - this.sprite.width / 2 + this.COLLIDER_MARGIN / 2, this.sprite.position.y - this.sprite.height / 2 + this.COLLIDER_MARGIN / 2, this.sprite.width - this.COLLIDER_MARGIN / 2, this.sprite.height - this.COLLIDER_MARGIN / 2);
-        this.app.stage.addChild(this.graphics);
-
         return new PIXI.Rectangle(
             this.sprite.position.x - this.sprite.width / 2 + this.COLLIDER_MARGIN / 2,
             this.sprite.position.y - this.sprite.height / 2 + this.COLLIDER_MARGIN / 2,
             this.sprite.width - this.COLLIDER_MARGIN / 2,
             this.sprite.height - this.COLLIDER_MARGIN / 2);
+    }
+
+    public destroy(): void {
+        this.app.stage.removeChild(this.sprite);
     }
 }

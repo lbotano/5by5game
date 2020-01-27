@@ -48,4 +48,10 @@ export default class Pipes {
             p.update(delta);
         }
     }
+
+    public destroy(): void {
+        for (const p of this.sectionList) {
+            p.destroy();
+        }
+    }
 }

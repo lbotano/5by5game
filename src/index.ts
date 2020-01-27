@@ -19,6 +19,9 @@ class Game {
 
     private isGameStarted: boolean = false;
     private hasLost: boolean = false;
+    private canRestart: boolean = false;
+
+    private readonly RESTART_DELAY: number = 200; // Time before the player can restart the game
     
     constructor() {
 
@@ -29,8 +32,6 @@ class Game {
         PIXI.Loader.shared.add('./assets/img/textures.json').load(() => {
             this.player = new Player(app);
             this.pipes = new Pipes(app);
-
-            console.log(areColliding(new PIXI.Rectangle(0, 0, 3, 3), new PIXI.Rectangle(2, 2, 1 ,1)));
 
             app.ticker.add((delta) => {this.update(delta)});
         });
@@ -52,6 +53,9 @@ class Game {
                     if (areColliding(playerBounds, pipe.getBottomBounds()) || areColliding(playerBounds, pipe.getTopBounds()))
                         this.lose();
                 }
+            } else {
+                if (this.keyboard.isPressed("Space") && this.canRestart)
+                    this.reset();
             }
         } else {
             if (this.keyboard.isPressed("Space"))
@@ -62,6 +66,24 @@ class Game {
     private lose(): void {
         this.hasLost = true;
         app.renderer.backgroundColor = 0xff0000;
+        setTimeout(() => {
+            this.canRestart = true;
+        }, this.RESTART_DELAY);
+    }
+
+    private reset(): void {
+        this.canRestart = false;
+        // Reset player
+        this.player.destroy();
+        this.player = new Player(app);
+        // Reset pipes
+        this.pipes.destroy();
+        this.pipes = new Pipes(app);
+
+        // Reset background color
+        app.renderer.backgroundColor = 0x42a7f5;
+
+        this.hasLost = false;
     }
 }
 
