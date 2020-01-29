@@ -65,7 +65,7 @@ class Game {
 
     private lose(): void {
         this.hasLost = true;
-        app.renderer.backgroundColor = 0xff0000;
+        app.renderer.backgroundColor = 0xdd675d;
         setTimeout(() => {
             this.canRestart = true;
         }, this.RESTART_DELAY);

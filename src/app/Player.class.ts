@@ -17,6 +17,8 @@ export default class Player {
     private readonly ROTATION_RANGE: number = 50; // Smaller means more rotation range
     private readonly COLLIDER_MARGIN: number = 20; // Number in pixels, if the sprite is 50x50 and this constant is 10, the collider will be 40x40
 
+    private jumpSound = new Audio('./assets/audio/jump.mp3');
+
     constructor(app: PIXI.Application) {
         this.app = app;
 
@@ -62,6 +64,7 @@ export default class Player {
 
         // Manage input
         if (this.keyboard.isPressed("Space") && this.velocity >= this.GRAVITY / 1000) {
+            this.jumpSound.play();
             this.acceleration = 0;
             this.velocity = -this.GRAVITY * 20;
         } else {
