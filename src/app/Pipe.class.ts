@@ -1,7 +1,8 @@
 import * as PIXI from 'pixi.js';
+import Game from './Game.class';
 
 export default class Pipe {
-    private app: PIXI.Application;
+    private game: Game;
     private sheet: PIXI.Spritesheet;
     private texture: PIXI.Texture;
     public sprites: Array<PIXI.Sprite> = new Array<PIXI.Sprite>();
@@ -13,26 +14,26 @@ export default class Pipe {
     private readonly BLOCK_SIZE: number = 5 * 6;
     private readonly HOLE_SIZE: number = 10;
 
-    constructor(app: PIXI.Application) {
-        this.app = app;
+    constructor(game: Game) {
+        this.game = game;
 
         // Load textures
         this.sheet = PIXI.Loader.shared.resources['./assets/img/textures.json'].spritesheet;
         this.texture = this.sheet.textures['blocks/sand.png'];
 
-        this.blockCount = Math.ceil((this.app.renderer.height / this.BLOCK_SIZE) - this.HOLE_SIZE);
+        this.blockCount = Math.ceil((this.game.app.renderer.height / this.BLOCK_SIZE) - this.HOLE_SIZE);
     }
 
     // This is a function separate from the constructor so there is space at the beginning
     public calculateObstacle(): void {
         const minY = 2;
-        const maxY = (this.app.renderer.height / this.BLOCK_SIZE) - this.HOLE_SIZE - 2;
+        const maxY = (this.game.app.renderer.height / this.BLOCK_SIZE) - this.HOLE_SIZE - 2;
         this.holeY = Math.ceil(Math.random() * (maxY - minY) + minY);
         for (let i = 0; i < this.blockCount; i++) {
             const sprite = new PIXI.Sprite(this.texture);
             sprite.scale = new PIXI.Point(6, 6);
             this.sprites.push(sprite);
-            this.app.stage.addChild(sprite);
+            this.game.app.stage.addChild(sprite);
         }
     }
 
@@ -47,7 +48,7 @@ export default class Pipe {
 
     public destroy(): void {
         for (const sprite of this.sprites) {
-            this.app.stage.removeChild(sprite);
+            this.game.app.stage.removeChild(sprite);
         }
     }
 
@@ -67,7 +68,18 @@ export default class Pipe {
             this.posX,
             holeBottomY,
             this.BLOCK_SIZE,
-            this.app.renderer.height - holeBottomY
+            this.game.app.renderer.height - holeBottomY
+        );
+    }
+
+    public getHoleBounds(): PIXI.Rectangle {
+        if (this.holeY === 0) return new PIXI.Rectangle();
+
+        return new PIXI.Rectangle(
+            this.posX,
+            this.holeY * this.BLOCK_SIZE,
+            this.BLOCK_SIZE,
+            this.game.app.renderer.height - (this.holeY + this.HOLE_SIZE) * this.BLOCK_SIZE
         );
     }
 }

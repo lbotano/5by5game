@@ -1,9 +1,10 @@
 import * as PIXI from 'pixi.js';
 
 import Pipe from '@app/Pipe.class';
+import Game from './Game.class';
 
 export default class Pipes {
-    private app: PIXI.Application;
+    private game: Game;
     private sheet: PIXI.Spritesheet;
     private texture: PIXI.Texture;
 
@@ -13,14 +14,14 @@ export default class Pipes {
 
     private readonly SCALE_FACTOR = 6 * 5; // 5 = texture width; 6 = texture scale
 
-    constructor(app: PIXI.Application) {
-        this.app = app;
+    constructor(game: Game) {
+        this.game = game;
 
         for (let i = 0; i < 3; i++) {
-            this.sectionList.push(new Pipe(this.app));
+            this.sectionList.push(new Pipe(this.game));
         }
         console.log(this.sectionList);
-        this.sectionWidth = this.app.renderer.width / (this.sectionList.length - 1);
+        this.sectionWidth = this.game.app.renderer.width / (this.sectionList.length - 1);
     }
 
     private movePipes(): void {
@@ -36,8 +37,8 @@ export default class Pipes {
 
         if (this.levelPosition > this.sectionWidth) {
             this.levelPosition -= this.sectionWidth;
-            this.sectionList.shift()//.destroy();
-            const newPipe = new Pipe(this.app);
+            this.sectionList.shift();
+            const newPipe = new Pipe(this.game);
             newPipe.calculateObstacle();
             this.sectionList.push(newPipe);
         }

@@ -1,0 +1,72 @@
+{"frames": {
+    "number_0": {
+        "frame": {"x": 0, "y": 0, "w": 10, "h": 20},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x": 0, "y": 0, "w": 10, "h": 20},
+        "sourceSize": {"w": 10, "h": 20}
+    },
+    "number_1": {
+        "frame": {"x": 10, "y": 0, "w": 10, "h": 20},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x": 0, "y": 0, "w": 10, "h": 20},
+        "sourceSize": {"w": 10, "h": 20}
+    },
+    "number_2": {
+        "frame": {"x": 20, "y": 0, "w": 10, "h": 20},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x": 0, "y": 0, "w": 10, "h": 20},
+        "sourceSize": {"w": 10, "h": 20}
+    },
+    "number_3": {
+        "frame": {"x": 30, "y": 0, "w": 10, "h": 20},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x": 0, "y": 0, "w": 10, "h": 20},
+        "sourceSize": {"w": 10, "h": 20}
+    },
+    "number_4": {
+        "frame": {"x": 40, "y": 20, "w": 10, "h": 20},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x": 0, "y": 0, "w": 10, "h": 20},
+        "sourceSize": {"w": 10, "h": 20}
+    },
+    "number_5": {
+        "frame": {"x": 0, "y": 20, "w": 10, "h": 20},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x": 0, "y": 0, "w": 10, "h": 20},
+        "sourceSize": {"w": 10, "h": 20}
+    },
+    "number_6": {
+        "frame": {"x": 10, "y": 20, "w": 10, "h": 20},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x": 0, "y": 0, "w": 10, "h": 20},
+        "sourceSize": {"w": 10, "h": 20}
+    },
+    "number_7": {
+        "frame": {"x": 20, "y": 20, "w": 10, "h": 20},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x": 0, "y": 0, "w": 10, "h": 20},
+        "sourceSize": {"w": 10, "h": 20}
+    },
+    "number_8": {
+        "frame": {"x": 30, "y": 20, "w": 10, "h": 20},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x": 0, "y": 0, "w": 10, "h": 20},
+        "sourceSize": {"w": 10, "h": 20}
+    },
+    "number_9": {
+        "frame": {"x": 40, "y": 20, "w": 10, "h": 20},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x": 0, "y": 0, "w": 10, "h": 20},
+        "sourceSize": {"w": 10, "h": 20}
+    },
+}}

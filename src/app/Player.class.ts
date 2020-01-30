@@ -1,11 +1,12 @@
 import * as PIXI from 'pixi.js';
 
+import Game from '@app/Game.class';
 import Keyboard from '@app/Keyboard.class';
 
 export default class Player {
     private keyboard: Keyboard = new Keyboard();
 
-    private app: PIXI.Application;
+    private game: Game;
     private sheet: PIXI.Spritesheet;
     private textures: PIXI.Texture[];
     public sprite: PIXI.Sprite;
@@ -19,8 +20,8 @@ export default class Player {
 
     private jumpSound = new Audio('./assets/audio/jump.mp3');
 
-    constructor(app: PIXI.Application) {
-        this.app = app;
+    constructor(game: Game) {
+        this.game = game;
 
         // Initialize variables
         this.sheet = PIXI.Loader.shared.resources['./assets/img/textures.json'].spritesheet;
@@ -38,11 +39,11 @@ export default class Player {
         this.sprite.scale = new PIXI.Point(6, 6);
 
         // Add player
-        this.app.stage.addChild(this.sprite);
+        this.game.app.stage.addChild(this.sprite);
 
         // Positionate player
-        this.sprite.position.x = this.app.screen.width / 3 - this.sprite.width / 3;
-        this.sprite.position.y = this.app.screen.height / 3 - this.sprite.height / 3;
+        this.sprite.position.x = this.game.app.screen.width / 3 - this.sprite.width / 3;
+        this.sprite.position.y = this.game.app.screen.height / 3 - this.sprite.height / 3;
     }
 
     public update(delta: number): void {
@@ -88,6 +89,6 @@ export default class Player {
     }
 
     public destroy(): void {
-        this.app.stage.removeChild(this.sprite);
+        this.game.app.stage.removeChild(this.sprite);
     }
 }
