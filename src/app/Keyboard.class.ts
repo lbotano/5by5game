@@ -5,6 +5,7 @@ export default class Keyboard {
         this.pressEventListener();
 
         window.addEventListener('keyup', (event: KeyboardEvent) => {
+            event.preventDefault();
             this.keys[event.code] = false;
             this.pressEventListener();
         });
@@ -13,6 +14,7 @@ export default class Keyboard {
     private pressEventListener(): void {
         // This is called once so you have to release the key before jumping again
         window.addEventListener('keydown', (event: KeyboardEvent) => {
+            event.preventDefault();
             this.keys[event.code] = true;
         }, {once: true});
     }

@@ -4,38 +4,51 @@ import Pipes from '@app/Pipes.class';
 import areColliding from '@app/Collision.module';
 import Keyboard from '@app/Keyboard.class';
 import Pipe from './Pipe.class';
+import NumberSprite from './NumberSprite.class';
+import NumberLabel from './NumberLabel.class';
+import Tooltip from './Tooltip.class';
 
 export default class Game {
     public app: PIXI.Application = new PIXI.Application({
-        width: 1280,
-        height: 720,
+        width: 800,
+        height: 600,
         backgroundColor: 0x42a7f5
     });
 
     private player: Player;
     private pipes: Pipes;
-    private keyboard: Keyboard = new Keyboard();
+    private scoreLabel: NumberLabel;
+    private tooltip: Tooltip;
 
+    private keyboard: Keyboard = new Keyboard();
     private isGameStarted: boolean = false;
     private hasLost: boolean = false;
     private canRestart: boolean = false;
     private lastCollider: Pipe;
 
     private score: number = 0;
+    private scoreSound = new Audio('./assets/audio/point.mp3');
 
     private readonly RESTART_DELAY: number = 200; // Time before the player can restart the game
+    public readonly PIXEL_SCALE: number = 4;
     
     constructor() {
-
         PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
         document.body.appendChild(this.app.view);
 
-        PIXI.Loader.shared.add('./assets/img/textures.json').load(() => {
+        PIXI.Loader.shared.add('./assets/img/spritesheet.json').load(() => {
             this.player = new Player(this);
             this.pipes = new Pipes(this);
+            this.scoreLabel = new NumberLabel(this);
+            this.tooltip = new Tooltip(this);
 
+            // Add update routine
             this.app.ticker.add((delta) => {this.update(delta)});
+
+            // Resize game to window size
+            this.resizeToScreen();
+            window.addEventListener('resize', () => this.resizeToScreen());
         });
     }
 
@@ -58,6 +71,7 @@ export default class Game {
                         // lastCollider prevents the score from being summed multiple times with the same pipe
                         if (this.lastCollider !== pipe) {
                             this.sumScore();
+                            this.scoreSound.play();
                             this.lastCollider = pipe;
                         }
                     }
@@ -67,25 +81,34 @@ export default class Game {
                     this.reset();
             }
         } else {
-            if (this.keyboard.isPressed("Space"))
+            if (this.keyboard.isPressed("Space")) {
+                this.tooltip.setVisibility(false);
                 this.isGameStarted = true;
+            }
         }
     }
 
     private sumScore(): void {
         this.score++;
-        console.log(this.score);
+        this.scoreLabel.setValue(this.score);
+    }
+
+    private resetScore(): void {
+        this.score = 0;
+        this.scoreLabel.setValue(this.score);
     }
 
     private lose(): void {
         this.hasLost = true;
         this.app.renderer.backgroundColor = 0xdd675d;
+        this.tooltip.setVisibility(true);
         setTimeout(() => {
             this.canRestart = true;
         }, this.RESTART_DELAY);
     }
 
     private reset(): void {
+        this.resetScore();
         this.canRestart = false;
         // Reset player
         this.player.destroy();
@@ -97,6 +120,17 @@ export default class Game {
         // Reset background color
         this.app.renderer.backgroundColor = 0x42a7f5;
 
+        // Reset tooltip
+        this.tooltip.setVisibility(false);
+
         this.hasLost = false;
+    }
+
+    private resizeToScreen() {
+        this.app.renderer.view.width = window.innerWidth;
+        this.app.renderer.view.height = window.innerHeight;
+
+        this.scoreLabel.resize();
+        this.tooltip.resize();
     }
 }

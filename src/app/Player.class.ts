@@ -8,7 +8,6 @@ export default class Player {
 
     private game: Game;
     private sheet: PIXI.Spritesheet;
-    private textures: PIXI.Texture[];
     public sprite: PIXI.Sprite;
 
     private velocity: number     = 0.0;
@@ -24,19 +23,14 @@ export default class Player {
         this.game = game;
 
         // Initialize variables
-        this.sheet = PIXI.Loader.shared.resources['./assets/img/textures.json'].spritesheet;
-        this.textures = [
-            this.sheet.textures['player/player_00.png'],
-            this.sheet.textures['player/player_01.png'],
-            this.sheet.textures['player/player_02.png']
-        ];
-        this.sprite = new PIXI.Sprite(this.textures[0]);
+        this.sheet = PIXI.Loader.shared.resources['./assets/img/spritesheet.json'].spritesheet;
+        this.sprite = new PIXI.Sprite(this.sheet.textures['player.png']);
 
         // Put pivot at the center
         this.sprite.pivot.set(this.sprite.width / 2, this.sprite.height / 2);
 
         // Scale player
-        this.sprite.scale = new PIXI.Point(6, 6);
+        this.sprite.scale.set(this.game.PIXEL_SCALE);
 
         // Add player
         this.game.app.stage.addChild(this.sprite);
@@ -54,14 +48,6 @@ export default class Player {
         // Rotate player according to velocity
         const rotation: number = .5 * Math.PI + this.velocity / this.ROTATION_RANGE;
         this.sprite.rotation = rotation;
-
-
-        // Change appearance depending on the velocity
-        if (this.velocity > 0) {
-            this.sprite.texture = this.textures[2];
-        } else {
-            this.sprite.texture = this.textures[0];
-        }
 
         // Manage input
         if (this.keyboard.isPressed("Space") && this.velocity >= this.GRAVITY / 1000) {

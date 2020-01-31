@@ -5,14 +5,10 @@ import Game from './Game.class';
 
 export default class Pipes {
     private game: Game;
-    private sheet: PIXI.Spritesheet;
-    private texture: PIXI.Texture;
 
     public sectionList: Array<Pipe> = new Array<Pipe>();
     private sectionWidth: number;
     private levelPosition: number = 0.0;
-
-    private readonly SCALE_FACTOR = 6 * 5; // 5 = texture width; 6 = texture scale
 
     constructor(game: Game) {
         this.game = game;
