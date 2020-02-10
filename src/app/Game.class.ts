@@ -1,4 +1,6 @@
-import * as PIXI from 'pixi.js'
+import * as PIXI from 'pixi.js';
+import MobileDetect = require('mobile-detect');
+
 import Player from '@app/Player.class';
 import Pipes from '@app/Pipes.class';
 import areColliding from '@app/Collision.module';
@@ -14,6 +16,7 @@ export default class Game {
         height: 600,
         backgroundColor: 0x42a7f5
     });
+    public mobileDetect: MobileDetect = new MobileDetect(window.navigator.userAgent);
 
     private player: Player;
     private pipes: Pipes;
@@ -33,6 +36,7 @@ export default class Game {
     public readonly PIXEL_SCALE: number = 4;
     
     constructor() {
+        // Set scale mode to nearest neighbour
         PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
         document.body.appendChild(this.app.view);
@@ -77,15 +81,23 @@ export default class Game {
                     }
                 }
             } else {
-                if (this.keyboard.isPressed("Space") && this.canRestart)
+                if (this.isPressed() && this.canRestart)
                     this.reset();
             }
         } else {
-            if (this.keyboard.isPressed("Space")) {
+            if (this.isPressed()) {
                 this.tooltip.setVisibility(false);
                 this.isGameStarted = true;
             }
         }
+    }
+
+    /*
+     * Returns if the space key is pressed or click depending of the device
+     */
+    public isPressed(): boolean {
+        return  /*this.mobileDetect.mobile() &&*/ this.keyboard.isPressed('tap') ||
+                this.keyboard.isPressed('Space');
     }
 
     private sumScore(): void {
@@ -126,7 +138,7 @@ export default class Game {
         this.hasLost = false;
     }
 
-    private resizeToScreen() {
+    private resizeToScreen(): void {
         this.app.renderer.view.width = window.innerWidth;
         this.app.renderer.view.height = window.innerHeight;
 

@@ -11,10 +11,12 @@ export default class Tooltip {
     constructor(game: Game) {
         this.game = game;
 
+        const texturePrefix = this.game.mobileDetect.mobile() ? 'hand' : 'spacebar';
+
         this.spritesheet = PIXI.Loader.shared.resources['./assets/img/spritesheet.json'].spritesheet;
         this.textures = [
-            this.spritesheet.textures['spacebar_00.png'],
-            this.spritesheet.textures['spacebar_01.png']
+            this.spritesheet.textures[`${texturePrefix}_00.png`],
+            this.spritesheet.textures[`${texturePrefix}_01.png`]
         ];
         this.sprite = new PIXI.AnimatedSprite(this.textures);
 

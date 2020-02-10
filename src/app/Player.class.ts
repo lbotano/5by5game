@@ -50,7 +50,7 @@ export default class Player {
         this.sprite.rotation = rotation;
 
         // Manage input
-        if (this.keyboard.isPressed("Space") && this.velocity >= this.GRAVITY / 1000) {
+        if ( (this.game.isPressed())  && this.velocity >= this.GRAVITY / 1000) {
             this.jumpSound.play();
             this.acceleration = 0;
             this.velocity = -this.GRAVITY * 20;

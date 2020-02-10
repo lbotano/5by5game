@@ -9,6 +9,12 @@ export default class Keyboard {
             this.keys[event.code] = false;
             this.pressEventListener();
         });
+
+        window.addEventListener('touchend', (event: TouchEvent) => {
+            event.preventDefault();
+            this.keys['tap'] = false;
+            this.pressEventListener();
+        });
     }
 
     private pressEventListener(): void {
@@ -17,6 +23,11 @@ export default class Keyboard {
             event.preventDefault();
             this.keys[event.code] = true;
         }, {once: true});
+
+        window.addEventListener('touchstart', (event: TouchEvent) => {
+            event.preventDefault();
+            this.keys['tap'] = true;
+        });
     }
 
     public isPressed(eventCode: string): boolean {

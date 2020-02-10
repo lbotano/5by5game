@@ -11,6 +11,7 @@ module.exports = {
     devtool: 'inline-source-map',
     mode: 'development',
     devServer: {
+        host: '192.168.0.2',
         contentBase: './dist',
         hot: true,
         port: 8000,

@@ -16,7 +16,6 @@ export default class Pipes {
         for (let i = 0; i < 3; i++) {
             this.sectionList.push(new Pipe(this.game));
         }
-        console.log(this.sectionList);
         this.sectionWidth = this.game.app.renderer.width / (this.sectionList.length - 1);
     }
 
