@@ -1,7 +1,7 @@
 {
   "name": "5by5game",
   "version": "1.0.0",
-  "description": "A game inspired by Terraria created by me for the Finally Finish Something 2020 Game Jam",
+  "description": "A game initially inspired by Terraria created by me for the Finally Finish Something 2020 Game Jam",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
